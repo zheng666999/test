@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.background.demo.dao.UserDao">
+
+    <!-- 验证登录 -->
+    <select id="login" resultType="com.background.demo.entity.User">
+		 select * from user where   user_id = #{user_id} and password =#{password} ;
+	</select>
+
+    <select id="selectUser" resultType="com.background.demo.entity.User">
+        select * from user where user_id=#{user_id} and password=#{password} ;
+    </select>
+
+    <select id="findUserById" resultType="com.background.demo.entity.User">
+        select * from user where user_id=#{user_id} ;
+    </select>
+
+    <select id="selectByPage" resultType="com.background.demo.entity.User">
+        select * from user order by user_id limit #{notleave}, #{end};
+    </select>
+
+    <select id="selectToatal" resultType="int">
+        select count(*) from user ;
+    </select>
+    <insert id="insertStudent" >
+        insert into user values (#{user_id},#{username},#{nickname},
+                                 #{password},#{gender},#{email},#{phone},
+                                 #{zip_code},#{location},#{age},#{country},
+                                 #{detail_address},#{identity},#{active},
+                                 #{code},#{updated},#{created})
+    </insert>
+    <delete id="deleteStudent">
+        delete from user where user_id=#{user_id}
+    </delete>
+
+    <update id="updateActive">
+        update user set active =#{active} where user_id=#{user_id}
+    </update>
+
+    <update id="updateConf">
+        update user set username=#{username},password=#{password},phone=#{phone},email=#{email},
+        nickname=#{nickname},age=#{age},location=#{location},gender=#{gender},detail_address=#{detail_address},
+        zip_code=#{zip_code},identity=#{identity},code=#{code},country=#{country}
+        where user_id=#{user_id}
+    </update>
+
+</mapper>
