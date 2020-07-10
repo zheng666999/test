@@ -21,6 +21,8 @@ public class DividePage {
     @UserLoginToken
     @RequestMapping("/dividePage")
     public Object DividePage(Page page , HttpServletResponse response){
+        int num = us.selectToatal();
+        System.out.println(num);
         Map m = new HashMap<String, Object>();
         if(page.getQuery()!=null){
             User user =us.findUserById(Integer.valueOf(page.getQuery()));
@@ -31,8 +33,8 @@ public class DividePage {
                 m1.put("msg","获取成功");
                 m1.put("status",200);
                 Map m2 = new HashMap<String, Object>();
-                m2.put("total",1);
-                m2.put("pagenum",0);
+                m2.put("total",num);
+                m2.put("pagenum",page.getPagenum());
                 m2.put("users",user);
                 m.put("data",m2);
                 m.put("meta",m1);
@@ -49,8 +51,8 @@ public class DividePage {
                 m2.put(i,list.get(i));
             }
             Map m3 = new HashMap<String, Object>();
-            m3.put("total",1);
-            m3.put("pagenum",0);
+            m3.put("total",num);
+            m3.put("pagenum",page.getPagenum());
             m3.put("users",m2);
             m.put("data",m3);
             m.put("meta",m1);

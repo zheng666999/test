@@ -32,14 +32,14 @@ public class UserService {
     public int selectToatal(){
         return ud.selectToatal();
     }
-    public boolean insertStudent(User user){
-        if(ud.insertStudent(user)>0){
+    public boolean insertUser(User user){
+        if(ud.insertUser(user)>0){
             return true;
         }
         return false;
     }
-    public boolean deleteStudent(User user){
-        if(ud.deleteStudent(user)>0){
+    public boolean deleteUser(User user){
+        if(ud.deleteUser(user)>0){
             return true;
         }
         return false;

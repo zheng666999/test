@@ -20,11 +20,11 @@ public class DealUser {
     @RequestMapping("/increase")
     public Object increaseUser(@RequestBody User user, HttpServletResponse response){
         Map m = new HashMap<String, Object>();
-        int num = us.selectToatal();
-        user.setUser_id(num+2);
+        /*int num = us.selectToatal();
+        user.setUser_id(num+2);*/
         System.out.println(user.getUser_id());
         System.out.println(user.getUsername());
-        if(us.insertStudent(user)){
+        if(us.insertUser(user)){
             Map m1 = new HashMap<String, Object>();
             m1.put("msg","创建成功");
             m1.put("status",200);
@@ -42,7 +42,8 @@ public class DealUser {
         if(us.findUserById(id)!=null){
             User user  = new User();
             user.setUser_id(id);
-            if(us.deleteStudent(user)){
+            if(us.deleteUser(user)){
+
                 Map m1 = new HashMap<String, Object>();
                 m1.put("msg","删除成功");
                 m1.put("status",200);
@@ -70,12 +71,13 @@ public class DealUser {
                 }
             }else{
                 if(us.updateConf(user)){
+                    if(us.updateConf(user)){
                     Map m1 = new HashMap<String, Object>();
                     m1.put("msg","修改成功");
                     m1.put("status",200);
                     m.put("data",null);
                     m.put("meta",m1);
-                    return m;
+                    return m;}
                 }
             }
         }

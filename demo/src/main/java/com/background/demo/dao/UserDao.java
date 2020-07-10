@@ -13,8 +13,9 @@ public interface UserDao {
     public User findUserById(int user_id);
     public List<User>  selectByPage(@Param("notleave")int  notleave,@Param("end")int  end);
     public int selectToatal();
-    public int insertStudent(User user);
-    public int deleteStudent(User user);
+    public int insertUser(User user);
+    public int deleteUser(User user);
     public int updateActive(User user);
     public int updateConf(User user);
+
 }

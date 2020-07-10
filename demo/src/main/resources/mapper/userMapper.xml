@@ -23,14 +23,15 @@
     <select id="selectToatal" resultType="int">
         select count(*) from user ;
     </select>
-    <insert id="insertStudent" >
-        insert into user values (#{user_id},#{username},#{nickname},
+    <insert id="insertUser" >
+        insert into user(username,nickname,password,gender,email, phone,zip_code,location,age,
+        country,detail_address,identity,active,code,updated,created) values (#{username},#{nickname},
                                  #{password},#{gender},#{email},#{phone},
                                  #{zip_code},#{location},#{age},#{country},
                                  #{detail_address},#{identity},#{active},
                                  #{code},#{updated},#{created})
     </insert>
-    <delete id="deleteStudent">
+    <delete id="deleteUser">
         delete from user where user_id=#{user_id}
     </delete>
 

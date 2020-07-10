@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.background.demo.dao.StoreDao">
+
+    <select id="findStoreById" resultType="com.background.demo.entity.Store">
+        select * from store where store_id=#{store_id} ;
+    </select>
+
+    <select id="selectByPage" resultType="com.background.demo.entity.Store">
+        select * from store order by store_id limit #{start}, #{end};
+    </select>
+
+    <select id="selectToatal" resultType="int">
+        select count(*) from store ;
+    </select>
+    <insert id="insertStore" >
+        insert into store(store_manager_id,store_phone_num,store_telephone,store_name
+        ,store_position,created,updated,active) values (#{store_manager_id},#{
+        store_phone_num},#{store_telephone},#{store_name},#{store_position},#{created},#{updated},#{active})
+    </insert>
+    <delete id="deleteStore">
+        delete from store where store_id=#{store_id}
+    </delete>
+
+    <update id="updateActive">
+        update store set active =#{active} where store_id=#{store_id}
+    </update>
+
+    <update id="updateConf">
+        update store set store_manager_id=#{store_manager_id},
+            store_phone_num=#{store_phone_num},store_telephone=#{store_telephone},
+            store_name=#{store_name},store_position=#{store_position},
+            created=#{created},updated=#{updated}
+        where store_id=#{store_id}
+    </update>
+
+</mapper>
