@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.background.demo.dao.PrivilegeDao">
+
+    <select id="selectAll" resultType="com.background.demo.entity.Pivilege">
+        select * from privilege;
+    </select>
+    <select id="selectRole" resultType="com.background.demo.entity.Role">
+        select * from role ;
+    </select>
+    <select id="selectRolePri" resultType="com.background.demo.entity.Pivilege">
+        select * from  privilege ,role_privilege where  privilege.priv_id=role_privilege.privilege_id
+        and role_privilege.role_id=#{role_id};
+    </select>
+    <insert id="insertPriv" >
+        insert into role_privilege(role_id,privilege_id) values (#{role_id},#{privilege_id});
+    </insert>
+    <delete id="deletePriv">
+        delete from role_privilege where role_id=#{role_id} and privilege_id=#{privilege_id}
+    </delete>
+
+</mapper>
