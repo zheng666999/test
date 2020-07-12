@@ -6,7 +6,6 @@ import com.background.demo.interceptor.UserLoginToken;
 import com.background.demo.service.PrivilegeService;
 import com.background.demo.util.BasicTree;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,26 +20,12 @@ public class Privilege {
     PrivilegeService ps;
 
     public Privilege() {
-
     }
     @UserLoginToken
     @RequestMapping("/allPrivilege")
     public Object backPrivilege(@RequestParam(value = "type") String type){
         System.out.println(type);
         List<Pivilege> list = ps.selectAll();
-        List<BasicTree> list2 =new ArrayList() ;
-        for(int i=0;i<list.size();i++){
-            BasicTree bt  = new BasicTree();
-            bt.createNode(list.get(i));
-            list2.add(bt);
-        }
-        for(int i=0;i<list2.size();i++){
-            for(int j=0;j<list2.size();j++){
-                if(list.get(j).getParent_id()==i+1){
-                    list2.get(i).children.add(list2.get(j));
-                }
-            }
-        }
         Map m = new HashMap<String, Object>();
         if(type.equals("list")){
             System.out.println(type);
@@ -55,11 +40,40 @@ public class Privilege {
             m.put("meta",m1);
             return m;
         }else if(type.equals("tree")){
-            System.out.println(list2);
+            List<BasicTree> list2 =new ArrayList() ;
+            List<BasicTree> list3=new ArrayList() ;
+            for(int i=0;i<list.size();i++){
+                BasicTree bt  = new BasicTree();
+                bt.createNode(list.get(i));
+                list3.add(bt);
+                if(list.get(i).is_parent==1) {
+                list2.add(bt);}
+            }
+            for(int i=0;i<list2.size();i++){
+                for(int j=0;j<list3.size();j++){
+                    if(list3.get(j).data.parent_id==list2.get(i).data.priv_id)
+                        list2.get(i).children.add(list3.get(j));
+                }
+            }
+            List<BasicTree> temp = new ArrayList<BasicTree>();
+            for (int i = 0; i < list2.size(); i++) {
+                if (check(list2.get(i).data.parent_id, list)==false) {
+                    temp.add(list2.get(i));
+                }
+            }
+            System.out.println(temp);
             Map m1 = new HashMap<String, Object>();
             m1.put("msg","获取权限列表成功");
             m1.put("status",200);
-            m.put("data",list2);
+            m.put("priv_id",temp.get(0).data.parent_id);
+            m.put("name",temp.get(0).data.name);
+            m.put("code",temp.get(0).data.code);
+            m.put("url",temp.get(0).data.url);
+            m.put("parent_id",temp.get(0).data.parent_id);
+            m.put("created",temp.get(0).data.created);
+            m.put("updated",temp.get(0).data.updated);
+            m.put("is_parent",temp.get(0).data.is_parent);
+            m.put("children",temp.get(0).children);
             m.put("meta",m1);
             return m;
         }
@@ -83,6 +97,8 @@ public class Privilege {
         for(int i=0;i<list.size();i++){
             System.out.println("id "+id+" "+"list "+list.get(i).priv_id);
             if(id==list.get(i).priv_id){
+                System.out.println("存在，删除");
+                System.out.println("============================================");
                 return true;
             }
         }
@@ -120,7 +136,10 @@ public class Privilege {
                 }
             }
             Map m2 = new HashMap<String, Object>();
-            m2.put("role",list3.get(n));
+            m2.put("role_id",list3.get(n).getRole_id());
+            m2.put("name",list3.get(n).getName());
+            m2.put("code",list3.get(n).getCode());
+            m2.put("description",list3.get(n).getDescription());
             Map m3 = new HashMap<String, Object>();
             m3.put("data",temp3);
             m2.put("data",m3);

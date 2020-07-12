@@ -33,7 +33,7 @@ public class Login {
         // System.out.println(userService.login(userForBase));
         User userForBase = userService.login(user);
         System.out.println(userForBase.getUser_id());
-        if (userForBase.getUsername()==null) {
+        if (userForBase.getUsername()==null&&Integer.valueOf(userForBase.getActive())==0) {
             m.put("message", "登录失败,密码错误");
             return m;
         } else {
